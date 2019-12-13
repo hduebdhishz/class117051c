@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <title>Document</title>
+</head>
+<body>
+    <div  id="app">
+          <ul>
+                 <li v-for="good in goodList"  v-bind:key="good.goodName">
+                         <span>{{good.goodName}}</span>
+                         --<span>{{good.price}}</span>
+                         --<span><input type="number" v-model="good.count"/></span>
+                         --<span>{{good.price*good.count}}元</span>
+                 </li>
+          </ul>
+          <h2>总价为:{{totalPrice}}元</h2>
+        </div>
+        <script>
+              var app = new Vue({
+                 el:"#app",
+                    data:{
+                     goodList:[
+                          {goodName:"耐克",price:888,count:9},
+                          {goodName:"阿迪",price:564,count:2},
+                          {goodName:"万斯",price:353,count:4},
+                          {goodName:"彪马",price:875,count:8},   
+                     ],
+                       totalPrice:0
+                    },
+                      watch:{
+                          goodList:{
+                              deep:true,
+                              handler:function(newVal){
+                                  var result=0;
+                                  newVal.forEach(function(good,index){
+                                      result+=good.price*good.count;      
+                                  })
+                                    this.totalPrice = result;
+                                  }
+                              }
+                          }
+                         
+                    //computed:{
+                      //  totalPrice:function(){
+                        //    return this.goodList[0].price* this.goodList[0].count;
+                       // }
+                  //  }
+              })
+
+
+        </script>
+      
+</body>
+</html>
